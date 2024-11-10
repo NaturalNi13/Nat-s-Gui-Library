@@ -5,6 +5,7 @@ function NatsLib:MakeWindow(config)
     local window = Instance.new("ScreenGui")
     window.Name = config.Name or "NatsLibWindow"
     window.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    window.Enabled = false  -- Start with window disabled
 
     -- Window frame
     local frame = Instance.new("Frame")
@@ -88,15 +89,22 @@ function NatsLib:MakeWindow(config)
         introText.Text = config.IntroText
         introText.TextColor3 = Color3.fromRGB(255, 255, 255)
         introText.BackgroundTransparency = 1
+        introText.TextTransparency = 1  -- Start fully transparent
         introText.Parent = frame
 
-        introText.TextTransparency = 1
+        -- Fade-in animation
         for i = 1, 10 do
             introText.TextTransparency = introText.TextTransparency - 0.1
             wait(0.1)
         end
+
+        introText:Destroy()  -- Remove intro text after animation
+        window.Enabled = true  -- Enable the main window
+    else
+        window.Enabled = true  -- Skip intro and enable main window immediately
     end
 
+    -- Return a table for managing the window’s elements
     return {
         AddTab = function(self, tabConfig)
             -- Add Tab Button to Sidebar
@@ -105,14 +113,17 @@ function NatsLib:MakeWindow(config)
             tabButton.Text = tabConfig.Name or "Tab"
             tabButton.TextColor3 = Color3.fromRGB(200, 200, 200)
             tabButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+            tabButton.BorderSizePixel = 0
             tabButton.Parent = sidebar
+
+            -- Handle tab functionality (e.g., switching tabs)
             tabButton.MouseButton1Click:Connect(function()
-                -- Handle tab switch logic here
                 print("Switched to tab:", tabConfig.Name)
             end)
+
             return tabButton
         end
-        -- More functions for other GUI elements can go here
+        -- Additional functions for other elements could go here
     }
 end
 
