@@ -11,8 +11,8 @@ function NatsLib:MakeWindow(config)
 
     -- Window frame
     local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0.8, 0, 0.6, 0)  -- Scaled down for mobile screens
-    frame.Position = UDim2.new(0.1, 0, 0.2, 0)
+    frame.Size = UDim2.new(0.6, 0, 0.7, 0)  -- Adjusted for mobile screen proportions
+    frame.Position = UDim2.new(0.2, 0, 0.15, 0)  -- Centered position
     frame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
     frame.BorderSizePixel = 0
     frame.Visible = false  -- Hide until intro completes
@@ -20,7 +20,7 @@ function NatsLib:MakeWindow(config)
 
     -- Sidebar for tabs
     local sidebar = Instance.new("Frame")
-    sidebar.Size = UDim2.new(0, 80, 1, 0)  -- Scaled down width for mobile
+    sidebar.Size = UDim2.new(0, 80, 1, 0)  -- Fixed width sidebar
     sidebar.Position = UDim2.new(0, 0, 0, 0)
     sidebar.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
     sidebar.BorderSizePixel = 0
@@ -81,7 +81,7 @@ function NatsLib:MakeWindow(config)
     end
 
     -- Function to create and position tabs in sidebar
-    local tabCount = 0
+    local tabCount = 0  -- Keeps track of the number of tabs added
 
     return {
         AddTab = function(self, tabConfig)
@@ -89,8 +89,8 @@ function NatsLib:MakeWindow(config)
 
             -- Create the tab button in the sidebar
             local tabButton = Instance.new("TextButton")
-            tabButton.Size = UDim2.new(1, 0, 0, 40)  -- Larger buttons for mobile
-            tabButton.Position = UDim2.new(0, 0, 0, (tabCount - 1) * 40)
+            tabButton.Size = UDim2.new(1, 0, 0, 40)  -- Fixed size for each tab
+            tabButton.Position = UDim2.new(0, 0, 0, (tabCount - 1) * 40)  -- Stack vertically
             tabButton.Text = tabConfig.Name or "Tab"
             tabButton.TextColor3 = Color3.fromRGB(200, 200, 200)
             tabButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)  -- Darker background for visibility
