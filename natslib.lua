@@ -1,17 +1,18 @@
 local NatsLib = {}
 
-
 function NatsLib:MakeWindow(config)
+    local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
     -- Main window setup
     local window = Instance.new("ScreenGui")
     window.Name = config.Name or "NatsLibWindow"
-    window.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    window.Parent = playerGui
     window.Enabled = true
 
     -- Window frame
     local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0, 400, 0, 300)
-    frame.Position = UDim2.new(0.5, -200, 0.5, -150)
+    frame.Size = UDim2.new(0.8, 0, 0.6, 0)  -- Scaled down for mobile screens
+    frame.Position = UDim2.new(0.1, 0, 0.2, 0)
     frame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
     frame.BorderSizePixel = 0
     frame.Visible = false  -- Hide until intro completes
@@ -19,7 +20,7 @@ function NatsLib:MakeWindow(config)
 
     -- Sidebar for tabs
     local sidebar = Instance.new("Frame")
-    sidebar.Size = UDim2.new(0, 100, 1, 0)
+    sidebar.Size = UDim2.new(0, 80, 1, 0)  -- Scaled down width for mobile
     sidebar.Position = UDim2.new(0, 0, 0, 0)
     sidebar.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
     sidebar.BorderSizePixel = 0
@@ -80,7 +81,7 @@ function NatsLib:MakeWindow(config)
     end
 
     -- Function to create and position tabs in sidebar
-    local tabCount = 0  -- Keep track of tabs to position each one
+    local tabCount = 0
 
     return {
         AddTab = function(self, tabConfig)
@@ -88,18 +89,18 @@ function NatsLib:MakeWindow(config)
 
             -- Create the tab button in the sidebar
             local tabButton = Instance.new("TextButton")
-            tabButton.Size = UDim2.new(1, 0, 0, 30)
-            tabButton.Position = UDim2.new(0, 0, 0, (tabCount - 1) * 30)  -- Stacks each tab button vertically
+            tabButton.Size = UDim2.new(1, 0, 0, 40)  -- Larger buttons for mobile
+            tabButton.Position = UDim2.new(0, 0, 0, (tabCount - 1) * 40)
             tabButton.Text = tabConfig.Name or "Tab"
             tabButton.TextColor3 = Color3.fromRGB(200, 200, 200)
-            tabButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+            tabButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)  -- Darker background for visibility
             tabButton.BorderSizePixel = 0
-            tabButton.Parent = sidebar  -- Ensures it's added to the sidebar frame
+            tabButton.Parent = sidebar  -- Ensure it's added to sidebar
 
             -- Debug message
             print("Tab created:", tabConfig.Name)
 
-            -- Handle tab functionality (e.g., switching tabs)
+            -- Handle tab functionality
             tabButton.MouseButton1Click:Connect(function()
                 print("Switched to tab:", tabConfig.Name)
             end)
