@@ -1,13 +1,13 @@
 local NatsLib = {}
 
 function NatsLib:MakeWindow(config)
-    -- Create main ScreenGui
+    -- Main window setup
     local window = Instance.new("ScreenGui")
     window.Name = config.Name or "NatsLibWindow"
     window.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-    window.Enabled = true  -- Enabled ScreenGui
+    window.Enabled = true
 
-    -- Main frame (window background)
+    -- Window frame
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(0, 400, 0, 300)
     frame.Position = UDim2.new(0.5, -200, 0.5, -150)
@@ -78,19 +78,24 @@ function NatsLib:MakeWindow(config)
         frame.Visible = true  -- Show frame immediately if no intro
     end
 
-    -- Return a table for managing the window’s elements
+    -- Function to create and position tabs in sidebar
+    local tabCount = 0  -- Keep track of tabs to position each one
+
     return {
         AddTab = function(self, tabConfig)
-            -- Add Tab Button to Sidebar
+            tabCount = tabCount + 1
+
+            -- Create the tab button in the sidebar
             local tabButton = Instance.new("TextButton")
             tabButton.Size = UDim2.new(1, 0, 0, 30)
+            tabButton.Position = UDim2.new(0, 0, 0, (tabCount - 1) * 30)  -- Stacks each tab button vertically
             tabButton.Text = tabConfig.Name or "Tab"
             tabButton.TextColor3 = Color3.fromRGB(200, 200, 200)
             tabButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
             tabButton.BorderSizePixel = 0
-            tabButton.Parent = sidebar
+            tabButton.Parent = sidebar  -- Ensures it's added to the sidebar frame
 
-            -- Print for debugging
+            -- Debug message
             print("Tab created:", tabConfig.Name)
 
             -- Handle tab functionality (e.g., switching tabs)
