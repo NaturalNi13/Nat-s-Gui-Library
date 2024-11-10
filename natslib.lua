@@ -1,5 +1,6 @@
 local NatsLib = {}
 
+
 function NatsLib:MakeWindow(config)
     -- Main window setup
     local window = Instance.new("ScreenGui")
