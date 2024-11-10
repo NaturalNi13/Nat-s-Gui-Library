@@ -9,10 +9,11 @@ function NatsLib:MakeWindow(config)
 
     -- Window frame
     local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0, 400, 0, 300)  -- Set size as desired
+    frame.Size = UDim2.new(0, 400, 0, 300)  -- Adjust size if needed
     frame.Position = UDim2.new(0.5, -200, 0.5, -150)  -- Center the frame
     frame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)  -- Dark gray background
     frame.BorderSizePixel = 0
+    frame.Visible = false  -- Start hidden, will enable after intro
     frame.Parent = window
 
     -- Sidebar for tabs
@@ -99,9 +100,11 @@ function NatsLib:MakeWindow(config)
         end
 
         introText:Destroy()  -- Remove intro text after animation
+        frame.Visible = true  -- Show the main frame after intro
         window.Enabled = true  -- Enable the main window
     else
-        window.Enabled = true  -- Skip intro and enable main window immediately
+        frame.Visible = true  -- Show frame immediately if no intro
+        window.Enabled = true  -- Enable window
     end
 
     -- Return a table for managing the window’s elements
